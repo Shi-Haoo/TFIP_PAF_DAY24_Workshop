@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to SuperMart</title>
+</head>
+<body>
+    <h1>Welcome to Supermart</h1>
+    <form method="post" action="/order" data-th-object="${product}">
+        <table>
+            <tr>
+                <td>Select Item to Add to Cart:</td>
+                <td>
+                    <!--User selection binded to name field of Product object using thymeleaf
+                    so if data-th-value="apple", then name field in Product object = "apple" -->
+                    <select data-th-field="*{name}" required>
+                        <option data-th-each="p : ${products}"
+                                data-th-value="${p.getName()}"
+                                data-th-name="${p.getName()}"></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Quantity:</td>
+                <td>
+                    <input type="number" data-th-field="*{quantity}" min="1" >
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <button type="submit">Add</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+    
+</body>
+</html>

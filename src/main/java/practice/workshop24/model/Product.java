@@ -1,5 +1,7 @@
 package practice.workshop24.model;
 
+import org.springframework.jdbc.support.rowset.SqlRowSet;
+
 //set values from fruit_products table into fields of this class
 
 public class Product {
@@ -8,7 +10,8 @@ public class Product {
     private String name;
     private double standardPrice;
     private double discount;
-    
+    private int quantity;
+
     public Product() {
     }
 
@@ -58,7 +61,17 @@ public class Product {
     }
 
     
-    
+    public static Product createFromSQLResults(SqlRowSet rs){
+
+        Product product = new Product();
+
+        product.setId(rs.getInt("id"));
+        product.setName(rs.getString("name"));
+        product.setStandardPrice(rs.getDouble("standard_price"));
+        product.setDiscount(rs.getDouble("discount"));
+
+        return product;
+    }
     
 
 }
