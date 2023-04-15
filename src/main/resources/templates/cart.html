@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to SuperMart</title>
+</head>
+<body>
+    <h1>Welcome to SuperMart!</h1>
+    <form method="post" data-th-action="@{/order}" data-th-object="${product}">
+        <table>
+            <tr>
+                <td>Select Item:</td>
+                <td>
+                    <!--User selection binded to name field of Product object using thymeleaf
+                    so if data-th-value="apple", then name field in Product object = "apple" -->
+                    <select data-th-field="*{name}" required>
+                        <option data-th-each="p : ${products}"
+                                data-th-value="${p.getName()}"
+                                data-th-text="${p.getName()}"></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Quantity:</td>
+                <td>
+                    <input type="number" data-th-field="*{quantity}" min="1" >
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <button type="submit">Add</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <h2>Your Cart:</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-th-each="i : ${items}">
+                <td><span data-th-text="${i.name}"></span></td>
+                <td><span data-th-text="${i.quantity}"></span></td>
+            </tr>
+        </tbody>
+    
+    <tfoot>
+        <tr>
+            <td colspan="2">
+            <form method="post" action="/checkout">
+            <tr>
+                <td>Customer Name:</td>
+                <td>
+                    <input type="text" name="name" required />
+                </td>
+            </tr>
+    
+            <tr>
+                <td>Shipping Address:</td>
+                <td>
+                    <input type="text" name="ship_address" required />
+                </td>
+            </tr>
+    
+            <tr>
+                <td>Notes:</td>
+                <td>
+                    <textarea cols="30" rows="5" placeholder="Any additional notes?" name="notes"></textarea>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2" style="padding-top: 10px;">
+                  <button type="submit">Checkout</button>
+                </td>
+              </tr>
+            </form>
+        </td>         
+        </tr>
+
+    </tfoot>
+
+    </table>
+</body>
+</html>

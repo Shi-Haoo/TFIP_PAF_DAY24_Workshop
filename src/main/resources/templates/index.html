@@ -12,14 +12,14 @@
     <form method="post" action="/order" data-th-object="${product}">
         <table>
             <tr>
-                <td>Select Item to Add to Cart:</td>
+                <td>Select Item:</td>
                 <td>
                     <!--User selection binded to name field of Product object using thymeleaf
                     so if data-th-value="apple", then name field in Product object = "apple" -->
                     <select data-th-field="*{name}" required>
                         <option data-th-each="p : ${products}"
                                 data-th-value="${p.getName()}"
-                                data-th-name="${p.getName()}"></option>
+                                data-th-text="${p.getName()}"></option>
                     </select>
                 </td>
             </tr>

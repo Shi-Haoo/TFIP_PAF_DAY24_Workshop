@@ -7,6 +7,7 @@ public class PurchaseOrderDetails {
     private double unitPrice;
     private double discount;
     private int quantity;
+    private int orderId;
     
     public PurchaseOrderDetails() {
     }
@@ -59,11 +60,22 @@ public class PurchaseOrderDetails {
         this.quantity = quantity;
     }
 
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
+    
+
     @Override
     public String toString() {
         return "PurchaseOrderDetails [id=" + id + ", product=" + product + ", unitPrice=" + unitPrice + ", discount="
                 + discount + ", quantity=" + quantity + "]";
     }
+
+    
 
     
     
