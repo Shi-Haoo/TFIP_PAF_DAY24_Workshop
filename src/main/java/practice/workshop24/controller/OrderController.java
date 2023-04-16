@@ -11,17 +11,19 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import practice.workshop24.exception.OrderException;
 import practice.workshop24.model.Product;
+import practice.workshop24.model.PurchaseOrder;
 import practice.workshop24.model.PurchaseOrderDetails;
 import practice.workshop24.service.GeneralService;
-import practice.workshop24.service.POUtility;
+
 
 @Controller
 @RequestMapping
 public class OrderController {
-    @Autowired
-    POUtility poUtil;
+    
 
     @Autowired
     GeneralService svc;
@@ -68,6 +70,33 @@ public class OrderController {
 
         return "cart";
 
+    }
+
+    @PostMapping(path="/checkout")
+    public String checkout(Model model, HttpSession session, @ModelAttribute Product product, HttpServletRequest request) throws OrderException{
+        
+        List<Product> items = (List<Product>) session.getAttribute("items");
+
+        //set the fields of PurchaseOrder Object with form input from user
+        PurchaseOrder po = PurchaseOrder.createFromRequest(request);
+        
+        //set the fields product,unitPrice,discount,quantity of 
+        //PurchaseOrderDetails Object with values from Product Object
+        List<PurchaseOrderDetails> pods = svc.setFieldsOfPods(items);
+
+        //insert PurchaseOrder and PurchaseOrderDetails record into database
+        int primaryKey = svc.insertOrder(po, pods);
+
+        //to display total no. of items
+        model.addAttribute("total", items.size());
+
+        //to display fields in PurchaseOrder
+        model.addAttribute("orderId", primaryKey);
+
+        //to display items checked out
+        model.addAttribute("items", items);
+        
+        return "checkout";
     }
 
 

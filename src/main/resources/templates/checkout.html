@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+</head>
+<body>
+    <h1>Thank you for shopping with us</h1>
+
+    <h2>Total Number of Items Checked Out: <span data-th-text="${total}"></span></h2>
+
+    <h2>Order ID is <span data-th-text="${orderId}"></span></h2>
+
+    <h2>Items Checked Out:</h2>
+    <table border="1">
+      <tr>
+        <th>Product</th>
+        <th>Quantity</th>
+      </tr>
+      <tr data-th-each="item : ${items}">
+        <td data-th-text="${item.getName()}"></td>
+        <td data-th-text="${item.getQuantity()}"></td>
+      </tr>
+    </table>
+
+    <h3>Shop <a href="/">again</a>?</h3>
+</body>
+</html>
